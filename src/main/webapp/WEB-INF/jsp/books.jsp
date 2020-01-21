@@ -6,24 +6,27 @@
 <body>
 
 	<c:choose>
-		<c:when test="${'1' != null}">
-			<h3>List of Users</h3>
+		<c:when test="${bookList != null}">
+			<h3>List of books</h3>
 			<table cellpadding="5" cellspacing="5">
 				<thead>
 					<tr>
 						<th>ID</th>
 						<th>Name</th>
 						<th>Author Name</th>
-
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="books" items="${book}">
+					<c:forEach var="book" items="${bookList}">
 						<tr>
 							<td>${book.id}</td>
 							<td>${book.name}</td>
 							<td>${book.authorName}</td>
+							<td><a href="<%=request.getContextPath()%>/update/book/${book.id}">Update</a>
+                                                       								&nbsp;
+							 <td><a href="<%=request.getContextPath()%>/delete/book/${book.id}"onclick="return confirm('Do you really want to delete?')">Delete</a></td>
 
+					    </tr>
 					</c:forEach>
 				</tbody>
 			</table>
