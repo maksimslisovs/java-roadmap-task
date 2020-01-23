@@ -5,9 +5,8 @@
 <title>Book list</title>
 <body>
 
-	<c:choose>
-		<c:when test="${bookList != null}">
 			<h3>List of books</h3>
+			<a href="<%=request.getContextPath()%>/add/">add</a>
 			<table cellpadding="5" cellspacing="5">
 				<thead>
 					<tr>
@@ -30,10 +29,6 @@
 					</c:forEach>
 				</tbody>
 			</table>
-		</c:when>
-		<c:otherwise>
-        No User found in the DB!
-        </c:otherwise>
-	</c:choose>
+
 </body>
 </html>
