@@ -6,7 +6,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table(name = "LIBRARY")
@@ -24,9 +27,7 @@ public class BookDO {
     @Column(name = "Author_Name", length = 64)
     private String authorName;
 
-//    @Temporal(TemporalType.DATE)
-//    @Column(name = "Date")
-//    private Date date;
-
-
+    @ManyToOne
+    @JoinColumn(name = "UserID")
+    private UserDO userDO;
 }

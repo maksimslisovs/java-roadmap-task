@@ -13,6 +13,7 @@
 						<th>ID</th>
 						<th>Name</th>
 						<th>Author Name</th>
+						<th>Is at the disposal of the user</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -21,6 +22,7 @@
 							<td>${book.id}</td>
 							<td>${book.name}</td>
 							<td>${book.authorName}</td>
+							<td>${book.userDO.userName}</td>
 							<td><a href="<%=request.getContextPath()%>/update/book/${book.id}">Update</a>
                                                        								&nbsp;
 							 <td><a href="<%=request.getContextPath()%>/delete/book/${book.id}"onclick="return confirm('Do you really want to delete?')">Delete</a></td>

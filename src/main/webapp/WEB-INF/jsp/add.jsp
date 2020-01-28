@@ -8,9 +8,13 @@
 	<form method="POST" name="add_book" action="<%=request.getContextPath()%>/add/book">
 	    Name: <input name="name"  type="text" />
 		<br /><br />
-		AName: <input name="authorName"  type="text" />
+		Author Name: <input name="authorName"  type="text" />
         <br /><br />
 		<input value="Add Book" type="submit" />
 	</form>
+
+		<form method="POST" name="add_user" action="<%=request.getContextPath()%>/add/user">
+    	    Name: <input name="userName"  type="text" />
+    	</form>
 </body>
 </html>
