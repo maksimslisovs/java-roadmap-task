@@ -11,7 +11,6 @@
 					<tr>
 						<th>User ID</th>
 						<th>User Name</th>
-						<th>Book ID</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -19,8 +18,9 @@
 						<tr>
 							<td>${user.userId}</td>
 							<td>${user.userName}</td>
-							<td>${user.ID}</td>
-
+							<td><a href="<%=request.getContextPath()%>/update/user/${user.userId}">Update</a>
+                                                                                   								&nbsp;
+                            <td><a href="<%=request.getContextPath()%>/delete/user/${user.userId}"onclick="return confirm('Do you really want to delete?')">Delete</a></td>
 					    </tr>
 					</c:forEach>
 				</tbody>

@@ -45,7 +45,7 @@ public class MainController {
 }
 
     @RequestMapping("/add")
-    public ModelAndView addBookPage(){
+    public ModelAndView addPage(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("add");
         return modelAndView;
@@ -54,6 +54,11 @@ public class MainController {
     public ModelAndView  saveBook(@ModelAttribute BookDO book) {
         bookRepository.save(book);
         return new ModelAndView("redirect:/books");
+    }
+    @RequestMapping(value = "add/user", method = RequestMethod.POST)
+    public ModelAndView  saveUser(@ModelAttribute UserDO userDO) {
+        userDAO.save(userDO);
+        return new ModelAndView("redirect:/users");
     }
 
     @RequestMapping(value = "delete/book/{id}", method = RequestMethod.GET)
@@ -97,10 +102,21 @@ public class MainController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "add/User", method = RequestMethod.POST)
-    public ModelAndView  saveUser(@ModelAttribute UserDO userDO) {
-        userDAO.save(userDO);
-        return new ModelAndView("redirect:/users");
+    @RequestMapping(value = "update/user/{userId}", method = RequestMethod.GET)
+    public String updateUser(@PathVariable("userId") long userId, ModelMap bookModel) {
+        bookModel.addAttribute("userId", userId);
+        bookModel.addAttribute("userDetail", userDAO.findById(userId).get());
+        return "userUpdate";
+    }
+    @RequestMapping(value = "update/user", method = RequestMethod.POST)
+    public String updateUser(@RequestParam long userId, @RequestParam(value = "userName", required = true) String userName,
+                             ModelMap userModel) {
+        UserDO userDetail = new UserDO();
+        userDetail.setUserId(userId);
+        userDetail.setUserName(userName);
+        userDAO.save(userDetail);
+
+        return "redirect:/users";
     }
 
 }

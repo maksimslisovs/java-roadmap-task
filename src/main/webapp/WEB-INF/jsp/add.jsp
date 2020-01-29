@@ -14,7 +14,9 @@
 	</form>
 
 		<form method="POST" name="add_user" action="<%=request.getContextPath()%>/add/user">
-    	    Name: <input name="userName"  type="text" />
+    	    User Name: <input name="userName"  type="text" />
+    	            <br /><br />
+            		<input value="Add User" type="submit" />
     	</form>
 </body>
 </html>

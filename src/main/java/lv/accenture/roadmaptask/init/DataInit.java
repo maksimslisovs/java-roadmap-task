@@ -42,22 +42,23 @@ public class DataInit implements CommandLineRunner {
             b1.setAuthorName("TestAuthor");
             b1.setUserDO(u1);
             bookRepository.save(b1);
-//
-//            BookDO b2 = new BookDO();
-//            b2.setName("TestBook_2");
-//
-//            UserDO u2 = new UserDO();
-//            u2.setUserName("User2");
-//            userDAO.save(u2);
-//            b2.setUserDO(u2);
-//
-//            bookRepository.save(b2);
-//
 
-//
-//
-//
-//
+            BookDO b2 = new BookDO();
+            b2.setName("TestBook_2");
+            b2.setAuthorName("TestAuthor_2");
+
+            bookRepository.save(b2);
+
+            UserDO u2 = new UserDO();
+            u2.setUserName("User2");
+
+            userDAO.save(u2);
+
+
+
+
+
+
         }
 
     }
