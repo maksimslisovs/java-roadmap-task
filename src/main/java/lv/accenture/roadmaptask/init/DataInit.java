@@ -28,7 +28,7 @@ public class DataInit implements CommandLineRunner {
         if (count == 0) {
             Book b1 = new Book();
             User u1 = new User();
-            u1.setUserName("User1");
+            u1.setUsername("User1");
 
             userDAO.save(u1);
 
@@ -44,7 +44,7 @@ public class DataInit implements CommandLineRunner {
             bookRepository.save(b2);
 
             User u2 = new User();
-            u2.setUserName("User2");
+            u2.setUsername("User2");
 
             userDAO.save(u2);
 

@@ -20,11 +20,11 @@
 					<c:forEach var="book" items="${bookList}">
 						<tr>
 							<td>${book.id}</td>
-							<td>${book.name}</td>
+							<td>${book.title}</td>
 							<td>${book.authorName}</td>
 							<c:choose>
-                                <c:when test="${book.userDO != null}">
-							        <td>${book.userDO.userName}</td>
+                                <c:when test="${book.user != null}">
+							        <td>${book.user.username}</td>
 							        </c:when>
                                 <c:otherwise>
                                     <td><a href="<%=request.getContextPath()%>/users/">assign to user</a></td>
@@ -33,7 +33,7 @@
                             </c:choose>
 
                             <c:choose>
-                                <c:when test="${book.userDO != null}">
+                                <c:when test="${book.user != null}">
 
                                     <td><a href="<%=request.getContextPath()%>/return/book/${book.id}">return Book</a>
                                 </c:when>

@@ -23,7 +23,7 @@ public class User {
     private Long id;
 
     @Column(name = "USERNAME", length = 64, nullable = false)
-    private String userName;
+    private String username;
 
     @OneToMany(
             mappedBy = "user",

@@ -16,11 +16,11 @@
 				<tbody>
 					<c:forEach var="user" items="${usersList}">
 						<tr>
-							<td>${user.userId}</td>
-							<td>${user.userName}</td>
-							<td><a href="<%=request.getContextPath()%>/update/user/${user.userId}">Update</a>
+							<td>${user.id}</td>
+							<td>${user.username}</td>
+							<td><a href="<%=request.getContextPath()%>/update/user/${user.id}">Update</a>
                                                                                    								&nbsp;
-                            <td><a href="<%=request.getContextPath()%>/delete/user/${user.userId}"onclick="return confirm('Do you really want to delete?')">Delete</a></td>
+                            <td><a href="<%=request.getContextPath()%>/delete/user/${user.id}"onclick="return confirm('Do you really want to delete?')">Delete</a></td>
 					    </tr>
 					</c:forEach>
 				</tbody>

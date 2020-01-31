@@ -7,11 +7,12 @@
 	<c:if test="${not empty msg}">
         ${msg}
     </c:if>
+
 	<h3>Update Book</h3>
 	<form method="POST" name="update_book"
 		action="<%=request.getContextPath()%>/update/user">
-		<input hidden="hidden" name="userId" value="${userId}" type="text" />
-		Name: <input name="userName" value="${userDetail.userName}" type="text" />
+		<input hidden="hidden" name="id" value="${userId}" type="text" />
+		Name: <input name="username" value="${userDetail.username}" type="text" />
 		<br />
 		<br /> <input value="Update user" type="submit" />
 	</form>
