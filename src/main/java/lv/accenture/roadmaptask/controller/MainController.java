@@ -90,8 +90,15 @@ public class MainController {
         bookRepository.save(bookDetail);
 
         return "redirect:/books";
-
     }
+
+    @RequestMapping(value = "return/book/{book}", method = RequestMethod.GET)
+    public String returnBook(@PathVariable("book") BookDO book, ModelMap bookModel) {
+        book.setUserDO(null);
+        bookRepository.save(book);
+        return "redirect:/books";
+    }
+
 
     @RequestMapping(value="/users")
     public ModelAndView userListPage(){
@@ -103,9 +110,9 @@ public class MainController {
     }
 
     @RequestMapping(value = "update/user/{userId}", method = RequestMethod.GET)
-    public String updateUser(@PathVariable("userId") long userId, ModelMap bookModel) {
-        bookModel.addAttribute("userId", userId);
-        bookModel.addAttribute("userDetail", userDAO.findById(userId).get());
+    public String updateUser(@PathVariable("userId") long userId, ModelMap userModel) {
+        userModel.addAttribute("userId", userId);
+        userModel.addAttribute("userDetail", userDAO.findById(userId).get());
         return "userUpdate";
     }
     @RequestMapping(value = "update/user", method = RequestMethod.POST)
@@ -119,4 +126,22 @@ public class MainController {
         return "redirect:/users";
     }
 
+    @RequestMapping(value = "delete/user/{userId}", method = RequestMethod.GET)
+    public String deleteUser(@PathVariable("userId") long userId, ModelMap userModel) {
+//        BookDO userHasBooks = new BookDO();
+//        userHasBooks = bookRepository.findByUserID(userId);
+//        if (userHasBooks == null) {
+            userDAO.deleteById(userId);
+            userModel.addAttribute("userDetail", userDAO.findAll());
+            if (userDAO.findById(userId).isPresent()) {
+                userModel.addAttribute("msg", "User with id : " + userId + " deleted successfully.");
+            } else {
+                userModel.addAttribute("msg", "User with id : " + userId + " deletion failed.");
+            }
+            return "redirect:/users";
+//        } else {
+//            userModel.addAttribute("msg", "User still has books : " + userHasBooks + " deletion failed.");
+//            return "redirect:/books";
+//        }
+    }
 }

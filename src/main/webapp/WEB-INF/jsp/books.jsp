@@ -23,10 +23,18 @@
 							<td>${book.name}</td>
 							<td>${book.authorName}</td>
 							<td>${book.userDO.userName}</td>
-							<td><a href="<%=request.getContextPath()%>/update/book/${book.id}">Update</a>
-                                                       								&nbsp;
-							 <td><a href="<%=request.getContextPath()%>/delete/book/${book.id}"onclick="return confirm('Do you really want to delete?')">Delete</a></td>
+							<td>
 
+                            <c:choose>
+                                <c:when test="${book.userDO != null}">
+
+                                    <td><a href="<%=request.getContextPath()%>/return/book/${book.id}">return Book</a>
+                                </c:when>
+                                <c:otherwise>
+							        <td><a href="<%=request.getContextPath()%>/update/book/${book.id}">Update</a>
+							        <td><a href="<%=request.getContextPath()%>/delete/book/${book.id}"onclick="return confirm('Do you really want to delete?')">Delete</a></td>
+                                </c:otherwise>
+                            </c:choose>
 					    </tr>
 					</c:forEach>
 				</tbody>
