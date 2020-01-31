@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -13,7 +14,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "BOOK")
 @Data
-public class BookDO {
+public class Book {
 
     @Id
     @GeneratedValue
@@ -26,7 +27,6 @@ public class BookDO {
     @Column(name = "AUTHOR_NAME", length = 64)
     private String authorName;
 
-    @ManyToOne
-    @JoinColumn(name = "USER_ID")
-    private UserDO userDO;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
 }

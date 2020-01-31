@@ -2,8 +2,8 @@ package lv.accenture.roadmaptask.controller;
 
 import lv.accenture.roadmaptask.db.BookRepository;
 import lv.accenture.roadmaptask.db.UserDAO;
-import lv.accenture.roadmaptask.entity.BookDO;
-import lv.accenture.roadmaptask.entity.UserDO;
+import lv.accenture.roadmaptask.entity.Book;
+import lv.accenture.roadmaptask.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -31,7 +31,7 @@ public class MainController {
     public ModelAndView listPage() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("books");
-        List<BookDO> booksList = (List<BookDO>) bookRepository.findAll();
+        List<Book> booksList = (List<Book>) bookRepository.findAll();
         modelAndView.addObject("bookList", booksList);
         return modelAndView;
     }
@@ -39,7 +39,7 @@ public class MainController {
 
     @RequestMapping(value = "book/{id}", method = RequestMethod.GET)
     public String getBookDetail(@PathVariable long id, ModelMap bookModel) {
-        Optional<BookDO> byId = bookRepository.findById(id);
+        Optional<Book> byId = bookRepository.findById(id);
         bookModel.addAttribute("bookDetail", byId.get());
         return "book";
     }
@@ -52,14 +52,14 @@ public class MainController {
     }
 
     @RequestMapping(value = "add/book", method = RequestMethod.POST)
-    public ModelAndView saveBook(@ModelAttribute BookDO book) {
+    public ModelAndView saveBook(@ModelAttribute Book book) {
         bookRepository.save(book);
         return new ModelAndView("redirect:/books");
     }
 
     @RequestMapping(value = "add/user", method = RequestMethod.POST)
-    public ModelAndView saveUser(@ModelAttribute UserDO userDO) {
-        userDAO.save(userDO);
+    public ModelAndView saveUser(@ModelAttribute User user) {
+        userDAO.save(user);
         return new ModelAndView("redirect:/users");
     }
 
@@ -85,7 +85,7 @@ public class MainController {
     @RequestMapping(value = "update/book", method = RequestMethod.POST)
     public String updateBook(@RequestParam long id, @RequestParam(value = "name", required = true) String name,
                              @RequestParam(value = "aname", required = true) String aname, ModelMap bookModel) {
-        BookDO bookDetail = new BookDO();
+        Book bookDetail = new Book();
         bookDetail.setId(id);
         bookDetail.setTitle(name);
         bookDetail.setAuthorName(aname);
@@ -95,8 +95,8 @@ public class MainController {
     }
 
     @RequestMapping(value = "return/book/{book}", method = RequestMethod.GET)
-    public String returnBook(@PathVariable("book") BookDO book, ModelMap bookModel) {
-        book.setUserDO(null);
+    public String returnBook(@PathVariable("book") Book book, ModelMap bookModel) {
+        book.setUser(null);
         bookRepository.save(book);
         return "redirect:/books";
     }
@@ -106,7 +106,7 @@ public class MainController {
     public ModelAndView userListPage() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("users");
-        List<UserDO> usersList = (List<UserDO>) userDAO.findAll();
+        List<User> usersList = (List<User>) userDAO.findAll();
         modelAndView.addObject("usersList", usersList);
         return modelAndView;
     }
@@ -121,7 +121,7 @@ public class MainController {
     @RequestMapping(value = "update/user", method = RequestMethod.POST)
     public String updateUser(@RequestParam long userId, @RequestParam(value = "userName", required = true) String userName,
                              ModelMap userModel) {
-        UserDO userDetail = new UserDO();
+        User userDetail = new User();
         userDetail.setId(userId);
         userDetail.setUserName(userName);
         userDAO.save(userDetail);
@@ -131,7 +131,7 @@ public class MainController {
 
     @RequestMapping(value = "delete/user/{id}", method = RequestMethod.GET)
     public String deleteUser(@PathVariable("id") long userId, ModelMap userModel) {
-//        BookDO userHasBooks = new BookDO();
+//        Book userHasBooks = new Book();
 //        userHasBooks = bookRepository.findByUserID(id);
 //        if (userHasBooks == null) {
         userDAO.deleteById(userId);
