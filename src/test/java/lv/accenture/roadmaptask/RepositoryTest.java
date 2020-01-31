@@ -37,12 +37,12 @@
 //        public void init() {
 //            BookDO b1 = new BookDO();
 //
-//            b1.setName("TestBook");
+//            b1.setTitle("TestBook");
 //            b1.setAuthorName("TestAuthor");
 //            bookRepository.save(b1);
 //
 //            BookDO b2 = new BookDO();
-//            b2.setName("TestBook_2");
+//            b2.setTitle("TestBook_2");
 //            b2.setAuthorName("TestAuthor_2");
 //            bookRepository.save(b2);
 //

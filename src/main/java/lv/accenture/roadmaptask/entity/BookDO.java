@@ -9,25 +9,24 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.util.List;
 
 @Entity
-@Table(name = "LIBRARY")
+@Table(name = "BOOK")
 @Data
 public class BookDO {
 
     @Id
     @GeneratedValue
-    @Column(name = "Id", nullable = false)
+    @Column(name = "ID")
     private Long id;
 
-    @Column(name = "Name", length = 64, nullable = false)
-    private String name;
+    @Column(name = "TITLE", length = 64, nullable = false)
+    private String title;
 
-    @Column(name = "Author_Name", length = 64)
+    @Column(name = "AUTHOR_NAME", length = 64)
     private String authorName;
 
     @ManyToOne
-    @JoinColumn(name = "UserID")
+    @JoinColumn(name = "USER_ID")
     private UserDO userDO;
 }

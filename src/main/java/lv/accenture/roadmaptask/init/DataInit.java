@@ -8,12 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 
 @Component
 public class DataInit implements CommandLineRunner {
@@ -38,13 +32,13 @@ public class DataInit implements CommandLineRunner {
 
             userDAO.save(u1);
 
-            b1.setName("TestBook");
+            b1.setTitle("TestBook");
             b1.setAuthorName("TestAuthor");
             b1.setUserDO(u1);
             bookRepository.save(b1);
 
             BookDO b2 = new BookDO();
-            b2.setName("TestBook_2");
+            b2.setTitle("TestBook_2");
             b2.setAuthorName("TestAuthor_2");
 
             bookRepository.save(b2);

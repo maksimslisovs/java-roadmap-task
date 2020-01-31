@@ -27,12 +27,12 @@ public class MainController {
     @Autowired
     private UserDAO userDAO;
 
-    @RequestMapping(value="/books")
-    public ModelAndView listPage(){
+    @RequestMapping(value = "/books")
+    public ModelAndView listPage() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("books");
         List<BookDO> booksList = (List<BookDO>) bookRepository.findAll();
-        modelAndView.addObject("bookList",booksList);
+        modelAndView.addObject("bookList", booksList);
         return modelAndView;
     }
 
@@ -41,22 +41,24 @@ public class MainController {
     public String getBookDetail(@PathVariable long id, ModelMap bookModel) {
         Optional<BookDO> byId = bookRepository.findById(id);
         bookModel.addAttribute("bookDetail", byId.get());
-    return "book";
-}
+        return "book";
+    }
 
     @RequestMapping("/add")
-    public ModelAndView addPage(){
+    public ModelAndView addPage() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("add");
         return modelAndView;
     }
+
     @RequestMapping(value = "add/book", method = RequestMethod.POST)
-    public ModelAndView  saveBook(@ModelAttribute BookDO book) {
+    public ModelAndView saveBook(@ModelAttribute BookDO book) {
         bookRepository.save(book);
         return new ModelAndView("redirect:/books");
     }
+
     @RequestMapping(value = "add/user", method = RequestMethod.POST)
-    public ModelAndView  saveUser(@ModelAttribute UserDO userDO) {
+    public ModelAndView saveUser(@ModelAttribute UserDO userDO) {
         userDAO.save(userDO);
         return new ModelAndView("redirect:/users");
     }
@@ -85,7 +87,7 @@ public class MainController {
                              @RequestParam(value = "aname", required = true) String aname, ModelMap bookModel) {
         BookDO bookDetail = new BookDO();
         bookDetail.setId(id);
-        bookDetail.setName(name);
+        bookDetail.setTitle(name);
         bookDetail.setAuthorName(aname);
         bookRepository.save(bookDetail);
 
@@ -100,45 +102,46 @@ public class MainController {
     }
 
 
-    @RequestMapping(value="/users")
-    public ModelAndView userListPage(){
+    @RequestMapping(value = "/users")
+    public ModelAndView userListPage() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("users");
         List<UserDO> usersList = (List<UserDO>) userDAO.findAll();
-        modelAndView.addObject("usersList",usersList);
+        modelAndView.addObject("usersList", usersList);
         return modelAndView;
     }
 
-    @RequestMapping(value = "update/user/{userId}", method = RequestMethod.GET)
-    public String updateUser(@PathVariable("userId") long userId, ModelMap userModel) {
-        userModel.addAttribute("userId", userId);
+    @RequestMapping(value = "update/user/{id}", method = RequestMethod.GET)
+    public String updateUser(@PathVariable("id") long userId, ModelMap userModel) {
+        userModel.addAttribute("id", userId);
         userModel.addAttribute("userDetail", userDAO.findById(userId).get());
         return "userUpdate";
     }
+
     @RequestMapping(value = "update/user", method = RequestMethod.POST)
     public String updateUser(@RequestParam long userId, @RequestParam(value = "userName", required = true) String userName,
                              ModelMap userModel) {
         UserDO userDetail = new UserDO();
-        userDetail.setUserId(userId);
+        userDetail.setId(userId);
         userDetail.setUserName(userName);
         userDAO.save(userDetail);
 
         return "redirect:/users";
     }
 
-    @RequestMapping(value = "delete/user/{userId}", method = RequestMethod.GET)
-    public String deleteUser(@PathVariable("userId") long userId, ModelMap userModel) {
+    @RequestMapping(value = "delete/user/{id}", method = RequestMethod.GET)
+    public String deleteUser(@PathVariable("id") long userId, ModelMap userModel) {
 //        BookDO userHasBooks = new BookDO();
-//        userHasBooks = bookRepository.findByUserID(userId);
+//        userHasBooks = bookRepository.findByUserID(id);
 //        if (userHasBooks == null) {
-            userDAO.deleteById(userId);
-            userModel.addAttribute("userDetail", userDAO.findAll());
-            if (userDAO.findById(userId).isPresent()) {
-                userModel.addAttribute("msg", "User with id : " + userId + " deleted successfully.");
-            } else {
-                userModel.addAttribute("msg", "User with id : " + userId + " deletion failed.");
-            }
-            return "redirect:/users";
+        userDAO.deleteById(userId);
+        userModel.addAttribute("userDetail", userDAO.findAll());
+        if (userDAO.findById(userId).isPresent()) {
+            userModel.addAttribute("msg", "User with id : " + userId + " deleted successfully.");
+        } else {
+            userModel.addAttribute("msg", "User with id : " + userId + " deletion failed.");
+        }
+        return "redirect:/users";
 //        } else {
 //            userModel.addAttribute("msg", "User still has books : " + userHasBooks + " deletion failed.");
 //            return "redirect:/books";

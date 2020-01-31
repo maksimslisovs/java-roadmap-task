@@ -22,8 +22,15 @@
 							<td>${book.id}</td>
 							<td>${book.name}</td>
 							<td>${book.authorName}</td>
-							<td>${book.userDO.userName}</td>
-							<td>
+							<c:choose>
+                                <c:when test="${book.userDO != null}">
+							        <td>${book.userDO.userName}</td>
+							        </c:when>
+                                <c:otherwise>
+                                    <td><a href="<%=request.getContextPath()%>/users/">assign to user</a></td>
+							        <td>
+							    </c:otherwise>
+                            </c:choose>
 
                             <c:choose>
                                 <c:when test="${book.userDO != null}">
