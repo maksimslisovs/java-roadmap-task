@@ -18,9 +18,19 @@
 						<tr>
 							<td>${user.id}</td>
 							<td>${user.username}</td>
-							<td><a href="<%=request.getContextPath()%>/update/user/${user.id}">Update</a>
-                                                                                   								&nbsp;
-                            <td><a href="<%=request.getContextPath()%>/delete/user/${user.id}"onclick="return confirm('Do you really want to delete?')">Delete</a></td>
+							<c:choose>
+                                <c:when test="${empty user.books}">
+							        <td><a href="<%=request.getContextPath()%>/update/user/${user.id}">Update</a>
+                                    <td><a href="<%=request.getContextPath()%>/delete/user/${user.id}"onclick="return confirm('Do you really want to delete?')">Delete</a></td>
+                                </c:when>
+							    <c:otherwise>
+
+							        <c:forEach var="book" items="${user.books}">
+                                        <td>${book.title}</td>
+                                    </c:forEach>
+
+                                </c:otherwise>
+                            </c:choose>
 					    </tr>
 					</c:forEach>
 				</tbody>
