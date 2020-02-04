@@ -1,5 +1,6 @@
 package lv.accenture.roadmaptask.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.CascadeType;
@@ -25,10 +26,4 @@ public class User {
     @Column(name = "USERNAME", length = 64, nullable = false)
     private String username;
 
-    @OneToMany(
-            mappedBy = "user",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    private List<Book> books;
 }

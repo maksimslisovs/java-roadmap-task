@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <title>Book list</title>
+<h1><a href="<%=request.getContextPath()%>/">home</a></h1>
 <body>
 
 			<h3>List of books</h3>
@@ -27,7 +28,7 @@
 							        <td>${book.user.username}</td>
 							        </c:when>
                                 <c:otherwise>
-                                    <td><a href="<%=request.getContextPath()%>/users/">assign to user</a></td>
+                                    <td><a href="<%=request.getContextPath()%>/book/${book.id}">assign to user</a></td>
 							        <td>
 							    </c:otherwise>
                             </c:choose>

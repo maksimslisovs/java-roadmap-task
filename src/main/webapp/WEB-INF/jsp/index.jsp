@@ -4,10 +4,8 @@
 <html>
 <title>Book Update</title>
 <body>
-<a href="<%=request.getContextPath()%>/add/">add</a>
-<a href="<%=request.getContextPath()%>/book/">book</a>
+<h1><a href="<%=request.getContextPath()%>/add/">add</a></h1>
 <h1><a href="<%=request.getContextPath()%>/books/">books</a></h1>
 <h1><a href="<%=request.getContextPath()%>/users/">users</a></h1>
-<a href="<%=request.getContextPath()%>/update/">Update</a>
 </body>
 </html>

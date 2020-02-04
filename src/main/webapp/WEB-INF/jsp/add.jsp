@@ -4,9 +4,10 @@
 <html>
 <title>Add book</title>
 <body>
+<h1><a href="<%=request.getContextPath()%>/">home</a></h1>
 	<h3>Add Book</h3>
 	<form method="POST" name="add_book" action="<%=request.getContextPath()%>/add/book">
-	    Name: <input name="name"  type="text" />
+	    Name: <input name="title"  type="text" />
 		<br /><br />
 		Author Name: <input name="authorName"  type="text" />
         <br /><br />

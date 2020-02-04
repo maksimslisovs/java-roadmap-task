@@ -2,7 +2,6 @@ package lv.accenture.roadmaptask.controller;
 
 import lv.accenture.roadmaptask.db.BookRepository;
 import lv.accenture.roadmaptask.entity.Book;
-import lv.accenture.roadmaptask.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -29,13 +28,6 @@ public class BookController extends MainController {
         List<Book> booksList = (List<Book>) bookRepository.findAll();
         modelAndView.addObject("bookList", booksList);
         return modelAndView;
-    }
-
-    @RequestMapping(value = "book/{id}", method = RequestMethod.GET)
-    public String getBook(@PathVariable long id, ModelMap bookModel) {
-        Optional<Book> byId = bookRepository.findById(id);
-        bookModel.addAttribute("bookDetail", byId.get());
-        return "book";
     }
 
     @RequestMapping("/add")

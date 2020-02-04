@@ -3,15 +3,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <title>Book Update</title>
+<h1><a href="<%=request.getContextPath()%>/">home</a></h1>
 <body>
-	<c:if test="${not empty msg}">
-        ${msg}
-    </c:if>
+
 	<h3>Update Book</h3>
 	<form method="POST" name="update_book"
 		action="<%=request.getContextPath()%>/update/book">
 		<input hidden="hidden" name="id" value="${id}" type="text" />
-		Name: <input name="name" value="${bookDetail.name}" type="text" />
+		Name: <input name="name" value="${bookDetail.title}" type="text" />
 		<br />
 		<br />Author Name: <input name="aname" value="${bookDetail.authorName}"
 			type="text" />
