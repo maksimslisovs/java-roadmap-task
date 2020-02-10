@@ -38,9 +38,9 @@ public class BookController extends MainController {
     }
 
     @RequestMapping(value = "add/book", method = RequestMethod.POST)
-    public ModelAndView saveBook(@ModelAttribute Book book) {
+    public String saveBook(@ModelAttribute Book book) {
         bookRepository.save(book);
-        return new ModelAndView("redirect:/books");
+        return "redirect:/books";
     }
 
     @RequestMapping(value = "delete/book/{id}", method = RequestMethod.GET)
