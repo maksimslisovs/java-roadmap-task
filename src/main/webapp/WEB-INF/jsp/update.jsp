@@ -10,7 +10,7 @@
 	<form method="POST" name="update_book"
 		action="<%=request.getContextPath()%>/update/book">
 		<input hidden="hidden" name="id" value="${id}" type="text" />
-		Name: <input name="name" value="${bookDetail.title}" type="text" />
+		Name: <input name="title" value="${bookDetail.title}" type="text" />
 		<br />
 		<br />Author Name: <input name="aname" value="${bookDetail.authorName}"
 			type="text" />

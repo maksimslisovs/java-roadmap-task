@@ -45,13 +45,9 @@ public class BookController extends MainController {
 
     @RequestMapping(value = "delete/book/{id}", method = RequestMethod.GET)
     public String deleteBook(@PathVariable("id") long id, ModelMap bookModel) {
+        List<Book> bo = bookRepository.findAll();
         bookRepository.deleteById(id);
         bookModel.addAttribute("bookDetail", bookRepository.findAll());
-        if (bookRepository.findById(id).isPresent()) {
-            bookModel.addAttribute("msg", "Book with id : " + id + " deleted successfully.");
-        } else {
-            bookModel.addAttribute("msg", "Book with id : " + id + " deletion failed.");
-        }
         return "redirect:/books";
     }
 
@@ -63,11 +59,11 @@ public class BookController extends MainController {
     }
 
     @RequestMapping(value = "update/book", method = RequestMethod.POST)
-    public String updateBook(@RequestParam long id, @RequestParam(value = "name", required = true) String name,
+    public String updateBook(@RequestParam long id, @RequestParam(value = "title", required = true) String title,
                              @RequestParam(value = "aname", required = true) String aname, ModelMap bookModel) {
         Book bookDetail = new Book();
         bookDetail.setId(id);
-        bookDetail.setTitle(name);
+        bookDetail.setTitle(title);
         bookDetail.setAuthorName(aname);
         bookRepository.save(bookDetail);
 

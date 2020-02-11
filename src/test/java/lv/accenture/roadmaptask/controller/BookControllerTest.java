@@ -2,8 +2,11 @@ package lv.accenture.roadmaptask.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lv.accenture.roadmaptask.db.BookRepository;
+import lv.accenture.roadmaptask.db.UserDAO;
 import lv.accenture.roadmaptask.entity.Book;
+import lv.accenture.roadmaptask.entity.User;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -31,6 +34,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.core.IsInstanceOf.any;
 import static org.junit.Assert.assertEquals;
@@ -56,6 +60,9 @@ public class BookControllerTest {
     @Mock
     BookRepository bookRepository;
 
+    @Mock
+    UserDAO userDAO;
+
     @InjectMocks
     BookController controller;
 
@@ -69,6 +76,7 @@ public class BookControllerTest {
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(webContext)
                 .build();
+
     }
 
 //    @Before
@@ -108,8 +116,8 @@ public class BookControllerTest {
     public void saveBook () throws Exception {
         MockHttpServletRequestBuilder builder =
                 MockMvcRequestBuilders.post("/add/book")
-                        .param("title", "KatieK")
-                        .param("authorName", "kat@exmaple.com");
+                        .param("title", "TestTitle")
+                        .param("authorName", "TestAuthor");
         this.mockMvc.perform(builder)
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.redirectedUrl(
@@ -117,91 +125,41 @@ public class BookControllerTest {
 
     }
 
-  /*  @Test
-    public void shouldProcessSaveAction() throws Exception {
-
-        // given
-        BindingResult result = mock(BindingResult.class);
-        ExampleEntity exampleEntity = mock(ExampleEntity.class);
-        HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
-
-        given(editorProcessor.processSaveAction("confirmed", exampleEntity, result, httpServletRequest)).willReturn(true);
-
-        // when
-        ResultActions perform = mockMvc.perform(post("/").sessionAttr("exampleEntity", exampleEntity)
-                .param("id", "123456"
-                        .param("action","save"));
-
-        // then
-        perform.andDo(print())
-                .andExpect(status().isOk());
-
-    }*/
-
-    public static String asJsonString(final Object obj) {
-        try {
-            return new ObjectMapper().writeValueAsString(obj);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    @Test
+    public void deleteBookTest() throws Exception {
+        this.mockMvc.perform(get("/delete/book/{id}",3))
+                .andExpect(MockMvcResultMatchers.redirectedUrl(
+                        "/books"));
     }
 
-//        public void saveBookTest() throws Exception {
-//            mockMvc.perform(post("add/book")
-//                    .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-//                    .param("title", "title")
-//                    .param("authorName", "authorName"))
-//                    .andExpect(status().is3xxRedirection())
-//                    .andExpect(header().string("Location", "/books")
-//                    );
-//        }
+    @Test
+    public void updatePageTest() throws Exception {
+        mockMvc.perform(get("/update/book/{id}", 2))
+                .andExpect(status().isOk())
+                .andExpect(view().name("update"));
+    }
 
-//    Book newBook = new Book(1L, "Spring Boot Guide", "mkyong", new BigDecimal("2.99"));
-//    when(mockRepository.save(any(Book.class))).thenReturn(newBook);
-//
-//        mockMvc.perform(post("/books")
-//                .content(om.writeValueAsString(newBook))
-//            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
-//            /*.andDo(print())*/
-//            .andExpect(status().isCreated())
-//            .andExpect(jsonPath("$.id", is(1)))
-//            .andExpect(jsonPath("$.name", is("Spring Boot Guide")))
-//            .andExpect(jsonPath("$.author", is("mkyong")))
-//            .andExpect(jsonPath("$.price", is(2.99)));
-//
-//    verify(mockRepository, times(1)).save(any(Book.class));
-//
-//}
+    @Test
+    public void updateBookTest () throws Exception {
+        MockHttpServletRequestBuilder builder =
+                MockMvcRequestBuilders.post("/update/book")
+                        .param("id", "2")
+                        .param("title", "TestTitleUpdate")
+                        .param("aname", "TestAuthorUpdate");
+        this.mockMvc.perform(builder)
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.redirectedUrl(
+                        "/books"));
+    }
 
-//    @Test
-//    public void updateEmployeeAPI() throws Exception
-//    {
-//        mvc.perform( MockMvcRequestBuilders
-//                .put("/employees/{id}", 2)
-//                .content(asJsonString(new EmployeeVO(2, "firstName2", "lastName2", "email2@mail.com")))
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .accept(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isOk())
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value("firstName2"))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value("lastName2"))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("email2@mail.com"));
-//    }
-//    @RequestMapping(value = "add/book", method = RequestMethod.POST)
-//    public ModelAndView saveBook(@ModelAttribute Book book) {
-//        bookRepository.save(book);
-//        return new ModelAndView("redirect:/books");
-//    }
-//
-//    @Test
-//    public void addBook() throws Exception {
-//        mockMvc.perform(post("add/book")
-//                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-//                .param("title", "Test_title")
-//                .param("authorName", "Test_author"))
-//                .andExpect(status().is3xxRedirection());
-//
-//    }
-//
-//
-//
+    @Test
+    public void returnBookTest () throws Exception {
+
+        MockHttpServletRequestBuilder builder =
+                MockMvcRequestBuilders.get("/return/book/{id}", 2);
+        this.mockMvc.perform(builder)
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.redirectedUrl(
+                        "/books"));
+    }
 }
