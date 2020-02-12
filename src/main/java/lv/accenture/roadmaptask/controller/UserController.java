@@ -36,7 +36,7 @@ public class UserController extends MainController {
     }
 
     @RequestMapping(value = "update/user/{id}", method = RequestMethod.GET)
-    public String updateUser(@PathVariable("id") long userId, ModelMap userModel) {
+    public String updateUserPage(@PathVariable("id") long userId, ModelMap userModel) {
         userModel.addAttribute("id", userId);
         userModel.addAttribute("userDetail", userDAO.findById(userId).get());
         return "userUpdate";
@@ -51,24 +51,5 @@ public class UserController extends MainController {
         userDAO.save(userDetail);
 
         return "redirect:/users";
-    }
-
-    @RequestMapping(value = "delete/user/{id}", method = RequestMethod.GET)
-    public String deleteUser(@PathVariable("id") long userId, ModelMap userModel) {
-//        Book userHasBooks = new Book();
-//        userHasBooks = bookRepository.findByUserID(id);
-//        if (userHasBooks == null) {
-        userDAO.deleteById(userId);
-        userModel.addAttribute("userDetail", userDAO.findAll());
-        if (userDAO.findById(userId).isPresent()) {
-            userModel.addAttribute("msg", "User with id : " + userId + " deleted successfully.");
-        } else {
-            userModel.addAttribute("msg", "User with id : " + userId + " deletion failed.");
-        }
-        return "redirect:/users";
-//        } else {
-//            userModel.addAttribute("msg", "User still has books : " + userHasBooks + " deletion failed.");
-//            return "redirect:/books";
-//        }
     }
 }

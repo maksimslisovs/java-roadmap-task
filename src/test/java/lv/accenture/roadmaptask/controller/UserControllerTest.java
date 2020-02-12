@@ -1,7 +1,8 @@
 package lv.accenture.roadmaptask.controller;
 
-import lv.accenture.roadmaptask.db.BookRepository;
+import lv.accenture.roadmaptask.db.UserDAO;
 import lv.accenture.roadmaptask.entity.Book;
+import lv.accenture.roadmaptask.entity.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +18,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -34,13 +34,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @WebAppConfiguration
-public class BookControllerTest {
+public class UserControllerTest {
 
     @Mock
-    BookRepository bookRepository;
+    UserDAO userDAO;
 
     @InjectMocks
-    BookController controller;
+    UserController controller;
 
     @Autowired
     private WebApplicationContext webContext;
@@ -56,75 +56,47 @@ public class BookControllerTest {
     }
 
     @Test
-    public void listBooksTest() {
-        Book book1 = mock(Book.class);
-        Book book2 = mock(Book.class);
-        List<Book> booksList = new ArrayList<>();
-        booksList.add(book1);
-        booksList.add(book2);
-        when(bookRepository.findAll()).thenReturn(booksList);
+    public void userListPageTest() {
+        User user1 = mock(User.class);
+        User user2 = mock(User.class);
+        List<User> userList = new ArrayList<>();
+        userList.add(user1);
+        userList.add(user2);
+        when(userDAO.findAll()).thenReturn(userList);
 
-        ModelAndView modelAndView = controller.listBooks();
+        ModelAndView modelAndView = controller.userListPage();
 
-        assertEquals("books", modelAndView.getViewName());
+        assertEquals("users", modelAndView.getViewName());
     }
 
     @Test
-    public void addBookTest() throws Exception {
-        mockMvc.perform(get("/add"))
+    public void saveUserTest() throws Exception {
+        MockHttpServletRequestBuilder builder =
+                MockMvcRequestBuilders.post("/add/user")
+                        .param("username", "TestUsername");
+        this.mockMvc.perform(builder)
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.redirectedUrl(
+                        "/users"));
+
+    }
+
+    @Test
+    public void updateUserPageTest() throws Exception {
+        mockMvc.perform(get("/update/user/{id}", 1))
                 .andExpect(status().isOk())
-                .andExpect(view().name("add"));
+                .andExpect(view().name("userUpdate"));
     }
 
-
     @Test
-    public void saveBookTest() throws Exception {
+    public void updateUserTest() throws Exception {
         MockHttpServletRequestBuilder builder =
-                MockMvcRequestBuilders.post("/add/book")
-                        .param("title", "TestTitle")
-                        .param("authorName", "TestAuthor");
+                MockMvcRequestBuilders.post("/update/user")
+                        .param("userId", "4")
+                        .param("username", "TestUsernameUpdate");
         this.mockMvc.perform(builder)
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.redirectedUrl(
-                        "/books"));
-
-    }
-
-    @Test
-    public void deleteBookTest() throws Exception {
-        this.mockMvc.perform(get("/delete/book/{id}", 3))
-                .andExpect(MockMvcResultMatchers.redirectedUrl(
-                        "/books"));
-    }
-
-    @Test
-    public void updatePageTest() throws Exception {
-        mockMvc.perform(get("/update/book/{id}", 2))
-                .andExpect(status().isOk())
-                .andExpect(view().name("update"));
-    }
-
-    @Test
-    public void updateBookTest() throws Exception {
-        MockHttpServletRequestBuilder builder =
-                MockMvcRequestBuilders.post("/update/book")
-                        .param("id", "2")
-                        .param("title", "TestTitleUpdate")
-                        .param("aname", "TestAuthorUpdate");
-        this.mockMvc.perform(builder)
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.redirectedUrl(
-                        "/books"));
-    }
-
-    @Test
-    public void returnBookTest() throws Exception {
-
-        MockHttpServletRequestBuilder builder =
-                MockMvcRequestBuilders.get("/return/book/{id}", 2);
-        this.mockMvc.perform(builder)
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.redirectedUrl(
-                        "/books"));
+                        "/users"));
     }
 }

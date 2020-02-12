@@ -45,7 +45,6 @@ public class BookController extends MainController {
 
     @RequestMapping(value = "delete/book/{id}", method = RequestMethod.GET)
     public String deleteBook(@PathVariable("id") long id, ModelMap bookModel) {
-        List<Book> bo = bookRepository.findAll();
         bookRepository.deleteById(id);
         bookModel.addAttribute("bookDetail", bookRepository.findAll());
         return "redirect:/books";
