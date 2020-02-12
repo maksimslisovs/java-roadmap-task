@@ -28,7 +28,7 @@
 							<td><form method="POST" name="assign_book"
                                  action="<%=request.getContextPath()%>/assign/user">
                                  <input hidden="hidden" name="id" value="${id}" type="text" />
-                                 <input hidden="hidden" name="name" value="${book.title}" type="text" />
+                                 <input hidden="hidden" name="title" value="${book.title}" type="text" />
                                  <input hidden="hidden" name="aname" value="${book.authorName}" type="text" />
                                  <input hidden="hidden" name="userId" value="${user.id}" type="text" />
                                  <input hidden="hidden" name="username" value="${user.username}" type="text" />

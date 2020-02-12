@@ -42,7 +42,7 @@ public class AssignController {
 
     @RequestMapping(value = "assign/user", method = RequestMethod.POST)
     public String assignUser(@RequestParam long id,
-                             @RequestParam(value = "name", required = true) String name,
+                             @RequestParam(value = "title", required = true) String name,
                              @RequestParam(value = "aname", required = true) String aname,
                              @RequestParam(value = "userId", required = true) Long userId,
                              @RequestParam(value = "username", required = true) String username,
@@ -59,16 +59,4 @@ public class AssignController {
 
         return "redirect:/books";
     }
-
-//    @RequestMapping(value = "update/book", method = RequestMethod.POST)
-//    public String updateBook(@RequestParam long id, @RequestParam(value = "name", required = true) String name,
-//                             @RequestParam(value = "aname", required = true) String aname, ModelMap bookModel) {
-//        Book bookDetail = new Book();
-//        bookDetail.setId(id);
-//        bookDetail.setTitle(name);
-//        bookDetail.setAuthorName(aname);
-//        bookRepository.save(bookDetail);
-//
-//        return "redirect:/books";
-//    }
 }
