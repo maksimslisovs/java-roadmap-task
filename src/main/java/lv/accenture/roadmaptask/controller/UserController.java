@@ -5,7 +5,6 @@ import lv.accenture.roadmaptask.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,12 +20,15 @@ public class UserController extends MainController {
     UserDAO userDAO;
 
     @RequestMapping(value = "add/user", method = RequestMethod.POST)
-    public ModelAndView saveUser(@ModelAttribute User user) {
-        userDAO.save(user);
+    public ModelAndView saveUser(@RequestParam(value = "username", required = true) String username,
+                                 ModelMap userModel) {
+        User userDetail = new User();
+        userDetail.setUsername(username);
+        userDAO.save(userDetail);
         return new ModelAndView("redirect:/users");
     }
 
-    @RequestMapping(value = "/users")
+    @RequestMapping(value = "/users", method = RequestMethod.GET)
     public ModelAndView userListPage() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("users");
@@ -38,7 +40,9 @@ public class UserController extends MainController {
     @RequestMapping(value = "update/user/{id}", method = RequestMethod.GET)
     public String updateUserPage(@PathVariable("id") long userId, ModelMap userModel) {
         userModel.addAttribute("id", userId);
-        userModel.addAttribute("userDetail", userDAO.findById(userId).get());
+        if (userDAO.findById(userId).isPresent()) {
+            userModel.addAttribute("userDetail", userDAO.findById(userId).get());
+        }
         return "userUpdate";
     }
 

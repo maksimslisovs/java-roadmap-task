@@ -51,7 +51,7 @@ public class AssignController {
         bookDetail.setId(id);
         bookDetail.setTitle(name);
         bookDetail.setAuthorName(aname);
-        User user =new User();
+        User user = new User();
         user.setId(userId);
         user.setUsername(username);
         bookDetail.setUser(user);

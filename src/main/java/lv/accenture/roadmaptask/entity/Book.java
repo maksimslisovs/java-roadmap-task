@@ -1,7 +1,7 @@
 package lv.accenture.roadmaptask.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,7 +14,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "BOOK")
-@Data
+@Setter
+@Getter
 public class Book {
 
     @Id

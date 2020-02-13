@@ -1,7 +1,6 @@
 package lv.accenture.roadmaptask.controller;
 
 import lv.accenture.roadmaptask.db.UserDAO;
-import lv.accenture.roadmaptask.entity.Book;
 import lv.accenture.roadmaptask.entity.User;
 import org.junit.Before;
 import org.junit.Test;

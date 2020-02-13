@@ -16,7 +16,7 @@ public class DataInit implements CommandLineRunner {
     private UserDAO userDAO;
 
     @Autowired
-    public DataInit(BookRepository bookRepository,UserDAO userDAO) {
+    public DataInit(BookRepository bookRepository, UserDAO userDAO) {
         this.bookRepository = bookRepository;
         this.userDAO = userDAO;
     }
@@ -47,7 +47,6 @@ public class DataInit implements CommandLineRunner {
             u2.setUsername("User2");
 
             userDAO.save(u2);
-
 
 
         }
