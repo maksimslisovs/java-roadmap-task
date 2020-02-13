@@ -47,10 +47,10 @@ public class UserController extends MainController {
     }
 
     @RequestMapping(value = "update/user", method = RequestMethod.POST)
-    public String updateUser(@RequestParam long userId, @RequestParam(value = "username", required = true) String username,
+    public String updateUser(@RequestParam long id, @RequestParam(value = "username", required = true) String username,
                              ModelMap userModel) {
         User userDetail = new User();
-        userDetail.setId(userId);
+        userDetail.setId(id);
         userDetail.setUsername(username);
         userDAO.save(userDetail);
 
