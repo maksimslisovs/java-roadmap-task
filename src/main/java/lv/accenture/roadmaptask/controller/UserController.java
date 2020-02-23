@@ -1,5 +1,6 @@
 package lv.accenture.roadmaptask.controller;
 
+import lv.accenture.roadmaptask.Service.Service;
 import lv.accenture.roadmaptask.db.UserDAO;
 import lv.accenture.roadmaptask.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +19,12 @@ public class UserController extends MainController {
 
     @Autowired
     UserDAO userDAO;
+    Service service;
 
     @RequestMapping(value = "add/user", method = RequestMethod.POST)
     public ModelAndView saveUser(@RequestParam(value = "username", required = true) String username,
                                  ModelMap userModel) {
-        User userDetail = new User();
-        userDetail.setUsername(username);
-        userDAO.save(userDetail);
+        service.saveUser(username);
         return new ModelAndView("redirect:/users");
     }
 
@@ -49,11 +49,7 @@ public class UserController extends MainController {
     @RequestMapping(value = "update/user", method = RequestMethod.POST)
     public String updateUser(@RequestParam long id, @RequestParam(value = "username", required = true) String username,
                              ModelMap userModel) {
-        User userDetail = new User();
-        userDetail.setId(id);
-        userDetail.setUsername(username);
-        userDAO.save(userDetail);
-
+        service.updateUser(id,username);
         return "redirect:/users";
     }
 }

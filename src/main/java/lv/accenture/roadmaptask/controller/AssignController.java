@@ -1,5 +1,6 @@
 package lv.accenture.roadmaptask.controller;
 
+import lv.accenture.roadmaptask.Service.Service;
 import lv.accenture.roadmaptask.db.BookRepository;
 import lv.accenture.roadmaptask.db.UserDAO;
 import lv.accenture.roadmaptask.entity.Book;
@@ -24,6 +25,7 @@ public class AssignController {
 
     @Autowired
     UserDAO userDAO;
+    Service service;
 
 
     @RequestMapping(value = "book/{id}", method = RequestMethod.GET)
@@ -47,16 +49,7 @@ public class AssignController {
                              @RequestParam(value = "userId", required = true) Long userId,
                              @RequestParam(value = "username", required = true) String username,
                              ModelMap bookModel) {
-        Book bookDetail = new Book();
-        bookDetail.setId(id);
-        bookDetail.setTitle(name);
-        bookDetail.setAuthorName(aname);
-        User user = new User();
-        user.setId(userId);
-        user.setUsername(username);
-        bookDetail.setUser(user);
-        bookRepository.save(bookDetail);
-
+        service.assignUser(id,name,aname,userId,username);
         return "redirect:/books";
     }
 }

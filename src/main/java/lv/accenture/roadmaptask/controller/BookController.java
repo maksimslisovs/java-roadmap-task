@@ -1,5 +1,6 @@
 package lv.accenture.roadmaptask.controller;
 
+import lv.accenture.roadmaptask.Service.Service;
 import lv.accenture.roadmaptask.db.BookRepository;
 import lv.accenture.roadmaptask.entity.Book;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ public class BookController extends MainController {
 
     @Autowired
     BookRepository bookRepository;
+    Service service;
 
     @RequestMapping(value = "/books", method = RequestMethod.GET)
     public ModelAndView listBooks() {
@@ -36,12 +38,9 @@ public class BookController extends MainController {
     }
 
     @RequestMapping(value = "add/book", method = RequestMethod.POST)
-    public String saveBook(@RequestParam(value = "title", required = true) String title,
+    public String saveBookPost(@RequestParam(value = "title", required = true) String title,
                            @RequestParam(value = "authorName", required = true) String authorName, ModelMap bookModel) {
-        Book bookDetail = new Book();
-        bookDetail.setTitle(title);
-        bookDetail.setAuthorName(authorName);
-        bookRepository.save(bookDetail);
+        service.saveBook(title,authorName);
         return "redirect:/books";
     }
 
@@ -62,13 +61,8 @@ public class BookController extends MainController {
     @RequestMapping(value = "update/book", method = RequestMethod.POST)
     public String updateBook(@RequestParam long id, @RequestParam(value = "title", required = true) String title,
                              @RequestParam(value = "aname", required = true) String aname, ModelMap bookModel) {
-        Book bookDetail = new Book();
-        bookDetail.setId(id);
-        bookDetail.setTitle(title);
-        bookDetail.setAuthorName(aname);
-        bookRepository.save(bookDetail);
-
-        return "redirect:/books";
+    service.updateBook(id,title,aname);
+    return "redirect:/books";
     }
 
     @RequestMapping(value = "return/book/{book}", method = RequestMethod.GET)
